@@ -5,11 +5,6 @@ import sys
 import os
 import json
 
-bucket = None
-s3 = None
-import getopt, sys
-import argparse
-
 
 class Info:
     EXTENTIONS = ('.jpg', '.jpeg')
