@@ -1,5 +1,3 @@
-import time
-
 import boto3
 import sys
 import os
