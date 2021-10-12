@@ -22,7 +22,6 @@ class Info:
     @classmethod
     def update_album(cls, bucket):
         result = bucket.put_object(Key=cls.ALBUM_NAME, Body=json.dumps(cls.albums))
-        print(result)
 
 
 def add_to_album(object_name, album_name, s3, bucket):
@@ -86,27 +85,29 @@ if __name__ == '__main__':
     long_options = ["upload", "download", "list", "path", "album"]
 
     args = sys.argv
-    print(args)
-    if 'upload' in args or 'download' in args:
-        if '-p' not in args:
-            print("Path argument(-p) is missed", file=sys.stderr)
-            sys.exit(1)
-        if '-a' not in args:
-            print("Album argument(-a) is missed", file=sys.stderr)
-            sys.exit(1)
-        path = args[args.index('-p') + 1]
-        album = args[args.index('-a') + 1]
-        print(path, album)
-        if 'upload' in args:
-            upload(path, album)
-        else:
-            download(path, album)
-    if 'list' in args:
-        if args[-1] == 'list':
-            get_album_list()
-        else:
+    if len(args) > 1:
+        if 'upload' in args or 'download' in args:
+            if '-p' not in args:
+                print("Path argument(-p) is missed", file=sys.stderr)
+                sys.exit(1)
             if '-a' not in args:
                 print("Album argument(-a) is missed", file=sys.stderr)
                 sys.exit(1)
+            path = args[args.index('-p') + 1]
             album = args[args.index('-a') + 1]
-            get_photos(album)
+            print(path, album)
+            if 'upload' in args:
+                upload(path, album)
+            else:
+                download(path, album)
+        if 'list' in args:
+            if args[-1] == 'list':
+                get_album_list()
+            else:
+                if '-a' not in args:
+                    print("Album argument(-a) is missed", file=sys.stderr)
+                    sys.exit(1)
+                album = args[args.index('-a') + 1]
+                get_photos(album)
+    else:
+        print("Command is missing", file=sys.stderr)
