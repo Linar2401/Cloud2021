@@ -37,7 +37,7 @@ def crop_image(image_data, vertices, extention):
 
 
 def add_face(bucket, image, index, folder_name, name):
-    name = str(folder_name + "unrecognized/"  + name + '/' + str(index) + '.' + name.split('.')[1])
+    name = str(folder_name + "unrecognized/" + name + '/' + str(index) + '.' + name.split('.')[1])
     bucket.put_object(Key=name, Body=image)
     return name
 
